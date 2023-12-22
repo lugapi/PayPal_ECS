@@ -1,0 +1,83 @@
+<style>
+    p.messageToUser {
+        overflow: overlay;
+        background-color: lightgreen;
+        border: 1px solid silver;
+        padding: 10px 20px;
+        margin: 20px;
+        border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+</style>
+
+<div class="container mx-auto">
+    <div class="pt-20 flex flex-col gap-10">
+        <div class="flex flex-col md:flex-row gap-10 items-center">
+            <div class="form w-1/2">
+                <h2 class="text-2xl font-bold mb-4">Registration</h2>
+                <form>
+                    <div class="mb-4">
+                        <label for="first-name" class="block font-bold">First Name</label>
+                        <input type="text" id="first-name" name="first-name" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="last-name" class="block font-bold">Last Name</label>
+                        <input type="text" id="last-name" name="last-name" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block font-bold">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block font-bold">Phone</label>
+                        <input type="text" id="phone" name="phone" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="street" class="block font-bold">Street</label>
+                        <input type="text" id="street" name="street" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="city" class="block font-bold">City</label>
+                        <input type="text" id="city" name="city" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <div class="mb-4">
+                        <label for="zip-code" class="block font-bold">ZIP Code</label>
+                        <input type="text" id="zip-code" name="zip-code" class="w-full border border-gray-300 rounded px-3 py-2">
+                    </div>
+                    <button class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Create my account</button>
+                </form>
+            </div>
+            <div class="message w-1/2 text-center flex flex-col gap-10">
+                <p class="messageToUser">PayPal transaction created. <br> So merchant could now save the buyer information to create an account, etc.</p>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h2>Full order data that can be retrieved :</h2>
+            <pre class="fullOrderData"></pre>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+    var payerInformation = JSON.parse(getCookie('payerInfo'));
+
+    document.querySelector('#first-name').value = payerInformation.payer.name.given_name;
+    document.querySelector('#last-name').value = payerInformation.payer.name.surname;
+    document.querySelector('#email').value = payerInformation.payer.email_address;
+    document.querySelector('#phone').value = payerInformation.payer.phone.phone_number.national_number;
+    document.querySelector('#street').value = payerInformation.purchase_units[0].shipping.address.address_line_1;
+    document.querySelector('#city').value = payerInformation.purchase_units[0].shipping.address.admin_area_2;
+    document.querySelector('#zip-code').value = payerInformation.purchase_units[0].shipping.address.postal_code;
+
+    document.querySelector('.fullOrderData').innerHTML += prettyPrintObject(payerInformation);
+
+</script>
