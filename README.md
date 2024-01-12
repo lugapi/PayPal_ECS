@@ -23,3 +23,13 @@ npm start
 ## How to Use
 
 Once the customer has completed the payment with PayPal, response is saved in cookie and customer is redirected on registration page with the registration form already (pre)filled.
+
+## Screenshots
+
+- Cart
+![cart](./screenshots/cart.png)
+
+<br />
+
+- Registration
+![registration](./screenshots/registration.png)

@@ -2,7 +2,7 @@
 import dotenv from 'dotenv';
 import fetch from "node-fetch";
 
-import { generateAccessToken, handleResponse } from './TESTcommon.js';
+import { generateAccessToken, handleResponse } from './common.js';
 
 dotenv.config();
 
