@@ -42,6 +42,8 @@ const json = {
   ],
 };
 
+const checkboxConditions = document.querySelector("#check");
+
   paypal
     .Buttons({
       style: [
@@ -52,6 +54,28 @@ const json = {
           label: "paypal",
         },
       ],
+      onInit(data, actions) {
+          // Disable the buttons
+          actions.disable();
+
+          // Listen for changes to the checkbox
+          checkboxConditions.addEventListener("change", function (event) {
+              // Enable or disable the button when it is checked or unchecked
+              if (event.target.checked) {
+                  actions.enable();
+              } else {
+                  actions.disable();
+              }
+          });
+      },
+
+      onClick: function (data, actions) {
+        console.log('onClick');
+        if (!checkboxConditions.checked) {
+          alert('Please check the conditions to proceed to the payment');
+        }
+      },
+
       createOrder: function (data, actions) {
         return fetch("/api/orders", {
           method: "post",
